@@ -49,12 +49,12 @@ class Bridge implements MessageComponentInterface
 
     /**
      * @param ConnectionManagerInterface $connectionManager
-     * @param EventDispatcher $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      * @param LoggerInterface $logger
      */
     public function __construct(
         ConnectionManagerInterface $connectionManager,
-        EventDispatcher $eventDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger
     ) {
         $this->connectionManager = $connectionManager;
@@ -90,13 +90,21 @@ class Bridge implements MessageComponentInterface
     {
         $connection = $this->connectionManager->closeConnection($conn);
 
-        $this->logger->notice(
-            sprintf(
-                'Closed connection <info>#%s</info> (<comment>%s</comment>)',
-                $connection->getId(),
-                $connection->getRemoteAddress()
-            )
-        );
+        if ($connection instanceof Connection) {
+            $this->logger->notice(
+                sprintf(
+                    'Closed connection <info>#%s</info> (<comment>%s</comment>)',
+                    $connection->getId(),
+                    $connection->getRemoteAddress()
+                )
+            );
+        } else {
+            $this->logger->notice(
+                sprintf(
+                    'Closed a connection'
+                )
+            );
+        }
     }
 
     /**
@@ -117,7 +125,7 @@ class Bridge implements MessageComponentInterface
     public function onMessage(SocketConnection $from, $msg)
     {
         try {
-            if (! $this->connectionManager->hasConnection($from)) {
+            if (!$this->connectionManager->hasConnection($from)) {
                 throw new NotManagedConnectionException('Unknown Connection');
             }
 
@@ -125,7 +133,7 @@ class Bridge implements MessageComponentInterface
                 throw new InvalidPayloadException(sprintf('Invalid payload received: "%s"', $msg));
             }
 
-            if (! in_array($payload->getEvent(), $this->allowedEvents)) {
+            if (!in_array($payload->getEvent(), $this->allowedEvents)) {
                 throw new InvalidEventCallException(sprintf('Unregistered event: "%s".', $payload->getEvent()));
             }
 
@@ -170,7 +178,7 @@ class Bridge implements MessageComponentInterface
      */
     protected function handleAuthentication(ConnectionInterface $connection, Payload $payload)
     {
-        if (! $this->connectionManager->authenticate($connection, $payload->getData())) {
+        if (!$this->connectionManager->authenticate($connection, $payload->getData())) {
             $connection->emit(new Payload(ConnectionEvent::SOCKET_AUTH_FAILURE, 'Invalid access token.'));
 
             $this->eventDispatcher->dispatch(ConnectionEvent::SOCKET_AUTH_FAILURE, new ConnectionEvent($connection));

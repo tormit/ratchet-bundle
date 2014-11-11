@@ -19,7 +19,7 @@ class Payload
      * @var string
      */
     protected $event;
-    
+
     /**
      * @var array
      */
@@ -34,11 +34,11 @@ class Payload
      */
     public static function isValid(array $json)
     {
-        if (! isset($json['event'])) {
+        if (!isset($json['event'])) {
             return false;
         }
 
-        if (! isset($json['data'])) {
+        if (!isset($json['data'])) {
             return false;
         }
 
@@ -93,8 +93,12 @@ class Payload
      *
      * @return Payload
      */
-    public static function createFromArray(array $data)
+    public static function createFromArray($data)
     {
+        if (!is_array($data)) {
+            return null;
+        }
+
         if (static::isValid($data)) {
 
             return new static($data['event'], $data['data']);
