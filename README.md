@@ -6,30 +6,30 @@ Version: **1.0.7**
 
 ### Installation
 
-    Add the bundle in yout composer .json file :
+Add the bundle in yout composer .json file :
+
+```json 
+    "require": {
+        "p2/ratchet-bundle": "1.0.*"
+    }
+```
+
+Enable the bundle in your project :
     
-    ```json 
-        "require": {
-            "p2/ratchet-bundle": "1.0.*"
-        }
-    ```
-    
-    Enable the bundle in your project :
-    
-    ```php
-    <?php 
-    //app/AppKernel.php
-    class AppKernel extends Kernel
+```php
+<?php 
+//app/AppKernel.php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
     {
-        public function registerBundles()
-        {
-            $bundles = array(
-            //...
-            new P2\Bundle\RatchetBundle\P2RatchetBundle(),
-            //...
-            );
-    //
-    ```
+        $bundles = array(
+        //...
+        new P2\Bundle\RatchetBundle\P2RatchetBundle(),
+        //...
+        );
+//
+```
 
 ### Configuration
 
