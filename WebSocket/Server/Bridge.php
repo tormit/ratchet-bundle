@@ -19,7 +19,7 @@ use P2\Bundle\RatchetBundle\WebSocket\Payload;
 use Psr\Log\LoggerInterface;
 use Ratchet\ConnectionInterface as SocketConnection;
 use Ratchet\MessageComponentInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Bridge

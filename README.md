@@ -1,12 +1,25 @@
 P2RatchetBundle
 ===============
 
-Version: **1.0.7**
+Version: **1.0.9**
 
 
 ### Installation
 
-Add the bundle in yout composer .json file :
+**Add this repository in composer.json:**
+
+```json 
+	"repositories": [
+        // ...
+        {
+            "type": "vcs",
+            "url": "git@github.com:tormit/ratchet-bundle.git"
+        },
+        // ...
+    ],
+```
+
+**Add the bundle in your composer.json file:**
 
 ```json 
     "require": {
@@ -14,7 +27,7 @@ Add the bundle in yout composer .json file :
     }
 ```
 
-Enable the bundle in your project :
+**Enable the bundle in your project:**
     
 ```php
 <?php 
