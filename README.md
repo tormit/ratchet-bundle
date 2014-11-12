@@ -1,8 +1,14 @@
 P2RatchetBundle
 ===============
 
-Version: **1.0.9**
+Version: **1.0.10**
 
+#### Notice
+Switched back to Ratchet WebSocket 0.2.x branch.
+
+With 0.3.x \Ratchet\WebSocket\WsServer::onOpen() fails because $request is not passed from \Ratchet\Server\IoServer::handleConnect().
+
+**If there is somebody with better knowledge about Ratchet WebSocket library, please help to make this bundle compatible with Ratchet WebSocket 0.3.x.**
 
 ### Installation
 
