@@ -9,6 +9,7 @@
  */
 namespace P2\Bundle\RatchetBundle\WebSocket\Server;
 
+use Guzzle\Http\Message\RequestInterface;
 use P2\Bundle\RatchetBundle\WebSocket\Connection\ConnectionManagerInterface;
 use P2\Bundle\RatchetBundle\WebSocket\Connection\ConnectionInterface;
 use P2\Bundle\RatchetBundle\WebSocket\ConnectionEvent;
@@ -71,6 +72,7 @@ class Bridge implements MessageComponentInterface
      */
     public function onOpen(SocketConnection $conn)
     {
+        //$conn->httpHeadersReceived = true;
         $connection = $this->connectionManager->addConnection($conn);
 
         $this->logger->notice(
